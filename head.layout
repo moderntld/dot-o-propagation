@@ -17,6 +17,10 @@ table, th, td {
 <body>
 <h1>.o Propagation</h1>
 <p>On March 23, 2019, the .o zone was reset following a new serial format, which is lower than the previous serial.<br />
-   All correctly configured servers picked up the new serial correctly, but some are still serving cached versions of the old zone.</p>
-<p>If you are a Tier 2 server operator, please update your configuration to grab the .o zone from ns11.opennic.glue.</p>
+   This is a two step process. The first step involves raising the serial to 4166515648.</br />
+   All correctly configured servers picked up the new serial correctly, but some are still serving cached versions of the old zone.<br />
+   Next, once a majority of servers pick up the new serial, the serial will be reset to 1553448687.<br />
+   This reset should work automatically, because BIND is designed to wrap around serials when the maximum value is reached.</p>
+<p>If you are a Tier 2 server operator, please update your configuration to grab the .o zone from ns11.opennic.glue.<br />
+   <strong>Your serial should not be 2019032001 or older!</strong></p>
 <p>If you need assistance, email <a href="mailto:jonah@opennic.org">jonah@opennic.org</a>.</p>
