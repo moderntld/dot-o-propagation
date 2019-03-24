@@ -6,7 +6,7 @@ DATE=`date`
 
 wget -qO api.txt --no-check-certificate "https://api.opennic.glue/acl/bind/?user=${USER}&auth=${AUTH}"
 sed -n '/opennic_whitelist/q;p' api.txt > api2.txt #remove all non-DNS servers!
-cat api2.txt | grep '^\t' > api3.txt
+cat api2.txt | grep -P '^\t' > api3.txt
 cut -f2 api3.txt | sed 's/.$//' > api4.txt
 grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' api4.txt > api5.txt #can't test IPv6 currently
 awk '!a[$0]++' api5.txt > api6.txt
