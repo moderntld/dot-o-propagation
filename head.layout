@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>.o propagation status 2019</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+.red {
+  background-color: red;
+  color: white;
+}
+.green {
+  color: green;
+}
+</style>
+</head>
+<body>
+<h1>.o Propagation</h1>
+<p>On March 23, 2019, the .o zone was reset following a new serial format, which is lower than the previous serial.<br />
+   All correctly configured servers picked up the new serial correctly, but some are still serving cached versions of the old zone.</p>
+<p>If you are a Tier 2 server operator, please update your configuration to grab the .o zone from ns11.opennic.glue.</p>
+<p>If you need assistance, email <a href="mailto:jonah@opennic.org">jonah@opennic.org</a>.</p>
