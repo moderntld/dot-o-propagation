@@ -5,10 +5,11 @@ REAL=`dig SOA +short o. @51.75.173.177 | egrep -ho '[0-9]{10}'`
 DATE=`date`
 
 wget -qO api.txt --no-check-certificate "https://api.opennic.glue/acl/bind/?user=${USER}&auth=${AUTH}"
-cat api.txt | grep '^\t' > api2.txt
-cut -f2 api2.txt | sed 's/.$//' > api3.txt
-grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' api3.txt > api4.txt #can't test IPv6 currently
-awk '!a[$0]++' api4.txt > api5.txt
+sed -n '/opennic_whitelist/q;p' api.txt > api2.txt #remove all non-DNS servers!
+cat api2.txt | grep '^\t' > api3.txt
+cut -f2 api3.txt | sed 's/.$//' > api4.txt
+grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' api4.txt > api5.txt #can't test IPv6 currently
+awk '!a[$0]++' api5.txt > api6.txt
 
 rm index.html
 cat head.layout >> index.html
@@ -26,7 +27,11 @@ while read ip; do
     echo "  <td class=\"red\">Bad! $SOA</td>" >> index.html
   fi
   echo "</tr>" >> index.html
-done <api5.txt
+done <api6.txt
 
+echo "</table>" >> index.html
+NEW_DATE=`date`
+echo "<p>Finished testing at $NEW_DATE</p>" >> index.html
 cat foot.layout >> index.html
+mv index.html public/index.html
 rm api*.txt
