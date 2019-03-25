@@ -3,6 +3,7 @@
 source SECRETS
 REAL=`dig SOA +short o. @51.75.173.177 | egrep -ho '[0-9]{10}'`
 DATE=`date`
+REALBIT=`dig SOA +short bit. @51.77.227.84 | egrep -ho '[0-9]{9}'`
 
 wget -qO api.txt --no-check-certificate "https://api.opennic.glue/acl/bind/?user=${USER}&auth=${AUTH}"
 sed -n '/opennic_whitelist/q;p' api.txt > api2.txt #remove all non-DNS servers!
@@ -14,6 +15,7 @@ awk '!a[$0]++' api5.txt > api6.txt
 rm index.html
 cat head.layout >> index.html
 echo "<p>The current serial for the .o zone is: <span class=\"green\">$REAL</span></p>" >> index.html
+echo "<p>The current serial for the .bit (Namecoin) zone is: <span class=\"green\">$REALBIT</span></p>" >> index.html
 echo "<p>This page was last updated on $DATE</p>" >> index.html
 cat table.layout >> index.html
 
@@ -21,10 +23,16 @@ while read ip; do
   echo "<tr>" >> index.html
   echo "  <td>$ip</td>" >> index.html
   SOA=`dig +short +time=2 +tries=1 SOA @$ip o. | egrep -ho '[0-9]{10}'`
+  SOABIT=`dig +short +time=2 +tries=1 SOA @$ip bit. | egrep -ho '[0-9]{9}'`
   if [ "$SOA" == "$REAL" ]; then
     echo "  <td class=\"green\">Ok! $SOA</td>" >> index.html
   else
     echo "  <td class=\"red\">Bad! $SOA</td>" >> index.html
+  fi
+  if [ "$SOABIT" == "$REALBIT" ]; then
+    echo "  <td class=\"green\">$SOABIT</td>" >> index.html
+  else
+    echo "  <td>$SOABIT</td>" >> index.html
   fi
   echo "</tr>" >> index.html
 done <api6.txt
