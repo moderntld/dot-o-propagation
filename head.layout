@@ -15,7 +15,7 @@ table, th, td {
 </style>
 </head>
 <body>
-<h1>.o Propagation</h1>
+<h1>ModernTLD Propagation Status</h1>
 <p><strong>.o Notice - March 23, 2019</strong> The .o zone has been reset following a new serial format, which is lower than the previous serial.<br />
    This is a two step process. The first step involves raising the serial to 4166515648.</br />
    All correctly configured servers picked up the new serial correctly, but some are still serving cached versions of the old zone.<br />
