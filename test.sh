@@ -25,9 +25,9 @@ while read ip; do
   SOA=`dig +short +time=2 +tries=1 SOA @$ip o. | egrep -ho '[0-9]{10}'`
   SOABIT=`dig +short +time=2 +tries=1 SOA @$ip bit. | egrep -ho '[0-9]{9}'`
   if [ "$SOA" == "$REAL" ]; then
-    echo "  <td class=\"green\">Ok! $SOA</td>" >> index.html
+    echo "  <td class=\"green\">$SOA</td>" >> index.html
   else
-    echo "  <td class=\"red\">Bad! $SOA</td>" >> index.html
+    echo "  <td class=\"red\">$SOA</td>" >> index.html
   fi
   if [ "$SOABIT" == "$REALBIT" ]; then
     echo "  <td class=\"green\">$SOABIT</td>" >> index.html
