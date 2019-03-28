@@ -14,8 +14,8 @@ awk '!a[$0]++' api5.txt > api6.txt
 
 rm index.html
 cat head.layout >> index.html
-echo "<p>The current serial for the .o zone is: <span class=\"green\">$REAL</span></p>" >> index.html
-echo "<p>The current serial for the .bit (Namecoin) zone is: <span class=\"green\">$REALBIT</span></p>" >> index.html
+echo "<p>The current serial for the .o zone is: <span class=\"green\">$REAL</span> (Last zone update: `date -d @$REAL`)</p>" >> index.html
+echo "<p>The current serial for the .bit (Namecoin) zone is: <span class=\"green\">$REALBIT</span> (Block: `echo $(($REALBIT/1000))`)</p>" >> index.html
 echo "<p>This page was last updated on $DATE</p>" >> index.html
 cat table.layout >> index.html
 
